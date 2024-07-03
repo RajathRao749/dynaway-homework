@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { Asset } from '../shared/models/asset.model'
 import { AssetService } from '../shared/services/asset.service'
+import { AssetApiResponse } from '../shared/models/http-response.model';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,7 @@ export class HomePage {
   constructor(private assetService: AssetService) {}
 
   ionViewWillEnter(): void {
-    this.assets = []
-    this.assetService.getAll().subscribe(assets => this.assets = assets)
+    this.assets = [];
+    this.assetService.getAll().subscribe((assets:AssetApiResponse) => this.assets = assets.data);
   }
 }

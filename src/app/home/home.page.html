@@ -20,4 +20,10 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+  <ion-toast 
+    [isOpen] = "showErrorToastMessage"
+    message="Please try again after sometime."
+    [duration]="5000"
+    (didDismiss)="setOpen(false)">
+  </ion-toast>
 </ion-content>

@@ -10,11 +10,21 @@ import { AssetApiResponse } from '../shared/models/http-response.model';
 })
 export class HomePage {
   assets: Asset[] = []
+  showErrorToastMessage:boolean = false;
 
   constructor(private assetService: AssetService) {}
 
   ionViewWillEnter(): void {
     this.assets = [];
-    this.assetService.getAll().subscribe((assets:AssetApiResponse) => this.assets = assets.data);
+    this.assetService.getAll().subscribe({
+      next: (assets:AssetApiResponse) => this.assets = assets.data,
+      error: () => {
+        this.showErrorToastMessage = true
+      }
+    });
+  }
+  
+  setOpen(isOpen: boolean) {
+    this.showErrorToastMessage = isOpen;
   }
 }

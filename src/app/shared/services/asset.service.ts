@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { Observable, of } from 'rxjs'
+import { Observable, of, throwError } from 'rxjs'
 import { mockAssetHttpResponse } from './asset.test'
 import { delay, tap } from 'rxjs/operators'
 import { getRandomInt } from '../functions'
@@ -14,6 +14,7 @@ export class AssetService {
   }
 
   getAll(): Observable<AssetApiResponse> {
+    return throwError(() => new Error('Manul error'));
     return of(mockAssetHttpResponse).pipe(
       delay(getRandomInt(1000) + 500), // fake random http delay,
       tap(() => { // a small chance for the data fetch to error

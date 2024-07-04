@@ -1,8 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary">
-    <ion-title>
-      Dynaway Homework
-    </ion-title>
+    <ion-title> Dynaway Homework </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -14,16 +12,25 @@
   </ion-header>
 
   <ion-grid class="list">
-    <ion-row>
-      <ion-col *ngFor="let asset of assets" size-xl="4" size-md="6" size="12">
-        <app-asset-card [asset]="asset"></app-asset-card>
-      </ion-col>
-    </ion-row>
+    <ng-container *ngIf="assets.length > 0;else skeleton">
+      <ion-row>
+        <ion-col *ngFor="let asset of assets" size-xl="4" size-md="6" size="12">
+          <app-asset-card [asset]="asset"></app-asset-card>
+        </ion-col>
+      </ion-row>
+    </ng-container>
   </ion-grid>
-  <ion-toast 
-    [isOpen] = "showErrorToastMessage"
+  <ion-toast
+    [isOpen]="showErrorToastMessage"
     message="Please try again after sometime."
     [duration]="5000"
-    (didDismiss)="setOpen(false)">
+    (didDismiss)="setOpen(false)"
+  >
   </ion-toast>
 </ion-content>
+
+<ng-template #skeleton>
+  <div *ngFor="let count of skeletonLoaderCount">
+    <app-asset-card></app-asset-card>
+  </div>
+</ng-template>

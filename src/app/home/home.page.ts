@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { Asset } from "../shared/models/asset.model";
 import { AssetService } from "../shared/services/asset.service";
-import { AssetApiResponse } from "../shared/models/http-response.model";
 
 @Component({
   selector: "app-home",
@@ -18,7 +17,7 @@ export class HomePage {
   ionViewWillEnter(): void {
     this.assets = [];
     this.assetService.getAll().subscribe({
-      next: (assets: AssetApiResponse) => (this.assets = assets.data),
+      next: (assets: Asset[]) => (this.assets = assets),
       error: () => {
         this.showErrorToastMessage = true;
       },

@@ -1,24 +1,24 @@
-import { Injectable } from '@angular/core'
-import { Observable, of } from 'rxjs'
-import { Asset } from '../models/asset.model'
-import { mockAssetHttpResponse } from './asset.test'
-import { delay, tap } from 'rxjs/operators'
-import { getRandomInt } from '../functions'
+import { Injectable } from "@angular/core";
+import { Observable, of, throwError } from "rxjs";
+import { mockAssetHttpResponse } from "./asset.test";
+import { delay, map, tap } from "rxjs/operators";
+import { getRandomInt } from "../functions";
+import { Asset } from "../models/asset.model";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AssetService {
-
-  constructor() {
-  }
+  constructor() {}
 
   getAll(): Observable<Asset[]> {
     return of(mockAssetHttpResponse).pipe(
       delay(getRandomInt(1000) + 500), // fake random http delay,
-      tap(() => { // a small chance for the data fetch to error
-        if (getRandomInt(10) % 10 === 0) throw Error('Http error')
+      tap(() => {
+        // a small chance for the data fetch to error
+        if (getRandomInt(10) % 10 === 0) throw Error("Http error");
       }),
-    )
+      map((assetObject) => assetObject.data)
+    );
   }
 }
